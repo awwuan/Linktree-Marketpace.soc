@@ -19,7 +19,7 @@
     <!-- Icon -->
     <link rel="shortcut icon" href="/assets/Logo.jpg" type="image/x-icon">
 
-     <!-- Tailwind Config to match design colors -->
+    <!-- Tailwind Config to match design colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -88,6 +88,13 @@
 
     <!-- Modern Premium Background -->
     <div class="fixed inset-0 z-[-1] pointer-events-none bg-brand-bg overflow-hidden">
+        
+        <!-- Interactive Mouse Glow (Terlihat saat digerakkan di Desktop) -->
+        <div id="mouse-glow" class="absolute inset-0 opacity-0 sm:opacity-100 mix-blend-screen"></div>
+
+        <!-- Canvas untuk Efek "Speed Sparks" (Pace/Kecepatan) -->
+        <canvas id="speed-sparks" class="absolute inset-0 opacity-50"></canvas>
+
         <!-- Animated Ambient Glows (Warna emas/tan dari brand) -->
         <div
             class="absolute -top-[20%] -right-[10%] w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] rounded-full bg-brand-tan opacity-[0.08] blur-[80px] sm:blur-[120px] animate-[pulse_6s_ease-in-out_infinite]">
@@ -101,8 +108,8 @@
             class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_0%,#000_40%,transparent_100%)] -webkit-mask-image:-webkit-radial-gradient(ellipse_80%_80%_at_50%_0%,#000_40%,transparent_100%)">
         </div>
 
-        <!-- Texture Aksi Berlari (Tema Running) -->
-        <div class="absolute inset-0 opacity-40" style="background-image: url('https://images.unsplash.com/photo-1552674605-171ff535c5c8?q=80&w=2070&auto=format&fit=crop'); 
+        <!-- Texture Aksi Berlari (Tema Running) dengan animasi Breathe -->
+        <div class="absolute inset-0 opacity-40 animate-breathe origin-center" style="background-image: url('https://images.unsplash.com/photo-1552674605-171ff535c5c8?q=80&w=2070&auto=format&fit=crop'); 
                     background-size: cover; 
                     background-position: center top; 
                     filter: grayscale(100%) contrast(120%);
@@ -111,19 +118,18 @@
         </div>
     </div>
 
-    <!-- Container Utama (Dibuat justify-center agar merata posisinya dan flex-1 untuk mengisi sisa ruang) -->
-    <main class="w-full max-w-md px-6 flex flex-col items-center justify-center flex-1 min-h-0">
+    <!-- Container Utama: Menambahkan pb-6 agar pusat konten sedikit terangkat ke atas -->
+    <main class="w-full max-w-md px-6 flex flex-col items-center justify-center flex-1 min-h-0 relative z-10 pb-6 sm:pb-8">
 
-        <!-- Logo Section (Margin diperkecil agar muat di HP) -->
-        <div class="flex flex-col items-center mb-3 sm:mb-4">
+        <!-- Logo Section (Margin diperbesar ke bawah) -->
+        <div class="flex flex-col items-center mb-6 sm:mb-8 mt-2">
             <!-- Mockup Logo MP -->
             <img src="/assets/Logo.jpg"
                 class="w-20 h-20 sm:w-24 sm:h-24 bg-black rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-gray-800">
-            </img>
         </div>
 
         <!-- Headline Texts -->
-        <div class="text-center mb-4 sm:mb-6">
+        <div class="text-center mb-5 sm:mb-6">
             <h2 class="font-inter font-semibold text-sm sm:text-sm text-white mb-1.5 letter-spacing-widest">
                 JERSEY RUNNING BARU & PRELOVED
             </h2>
@@ -133,9 +139,9 @@
             </p>
         </div>
 
-        <!-- Features Icons Row (Padding & Margin diperkecil) -->
+        <!-- Features Icons Row -->
         <div
-            class="flex justify-center items-center w-full gap-3 sm:gap-6 mb-5 sm:mb-8 border-t border-b border-gray-800/50 py-3">
+            class="flex justify-center items-center w-full gap-3 sm:gap-6 mb-6 sm:mb-8 border-t border-b border-gray-800/50 py-3">
             <!-- Feature 1 -->
             <div class="flex items-center gap-1.5 sm:gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 text-brand-tan opacity-80" viewBox="0 0 24 24"
@@ -170,8 +176,8 @@
             </div>
         </div>
 
-        <!-- Links Container (Gap dirapatkan agar hemat tempat di layar kecil) -->
-        <div class="w-full flex flex-col gap-3 sm:gap-4 w-full">
+        <!-- Links Container (Gap diperbesar dari gap-3 menjadi gap-4/gap-5) -->
+        <div class="w-full flex flex-col gap-4 sm:gap-5 w-full">
 
             <!-- WhatsApp Button -->
             <a href="wa.me/6289657042555"
@@ -203,7 +209,7 @@
             <a href="https://shp.ee/fTyzj8Xe"
                 class="group w-full bg-brand-darkbtn hover:bg-brand-darkbtnhover p-3 sm:p-4 rounded-2xl sm:rounded-3xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 border border-gray-800 shadow-lg">
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <!-- Shopee Icon Box (Icon Tas Belanja) -->
+                    <!-- Shopee Icon Box (Shopping Bag) -->
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#1f2529] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-inner text-brand-shopee">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
@@ -213,8 +219,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-white text-sm sm:text-base">Shopee Store</h3>
-                        <!-- Deskripsi diubah menjadi CTA -->
-                        <p class="text-brand-shopee text-[10px] sm:text-xs mt-0.5 font-medium">Pesan Sekarang via Shopee 🛍️</p>
+                        <p class="text-brand-shopee text-[10px] sm:text-xs mt-0.5 font-medium">Order Nyaman & Bebas Ongkir 🚚</p>
                     </div>
                 </div>
                 <div class="text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
@@ -229,7 +234,7 @@
             <a href="https://tk.tokopedia.com/ZSxnGJBP1/"
                 class="group w-full bg-brand-darkbtn hover:bg-brand-darkbtnhover p-3 sm:p-4 rounded-2xl sm:rounded-3xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 border border-gray-800 shadow-lg">
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <!-- Tokopedia Icon Box (Icon Tas Belanja) -->
+                    <!-- Tokopedia Icon Box (Shopping Bag) -->
                     <div class="w-10 h-10 sm:w-12 sm:h-12 bg-[#1f2529] rounded-xl sm:rounded-2xl flex items-center justify-center shadow-inner text-[#42B549]">
                         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
@@ -239,8 +244,7 @@
                     </div>
                     <div>
                         <h3 class="font-bold text-white text-sm sm:text-base">Tokopedia Store</h3>
-                        <!-- Deskripsi diubah menjadi CTA -->
-                        <p class="text-[#42B549] text-[10px] sm:text-xs mt-0.5 font-medium">Pesan Sekarang via Tokopedia ✨</p>
+                        <p class="text-[#42B549] text-[10px] sm:text-xs mt-0.5 font-medium">Transaksi Aman & Praktis ⚡</p>
                     </div>
                 </div>
                 <div class="text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
@@ -255,7 +259,7 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="w-full max-w-md flex flex-col items-center border-t border-gray-800/50 py-4 mt-auto">
+    <footer class="w-full max-w-md flex flex-col items-center border-t border-gray-800/50 py-4 mt-auto relative z-10">
         <!-- Instagram Link -->
         <a href="https://instagram.com/marketpace.soc" target="_blank"
             class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
@@ -269,6 +273,72 @@
         </a>
     </footer>
 
+    <!-- Javascript untuk Animasi Interaktif -->
+    <script>
+        // 1. Interactive Mouse Glow (Sorot kursor mengikuti mouse)
+        const glow = document.getElementById('mouse-glow');
+        window.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            glow.style.setProperty('--mouse-x', `${x}px`);
+            glow.style.setProperty('--mouse-y', `${y}px`);
+        });
+
+        // 2. Speed Sparks Canvas (Efek partikel energi lari)
+        const canvas = document.getElementById('speed-sparks');
+        const ctx = canvas.getContext('2d');
+        let width, height, sparks = [];
+
+        function initCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            sparks = [];
+            // Buat 40 partikel energi
+            for (let i = 0; i < 40; i++) {
+                sparks.push(createSpark());
+            }
+        }
+
+        function createSpark() {
+            return {
+                x: Math.random() * width,
+                y: Math.random() * height,
+                size: Math.random() * 1.5 + 0.5, // Ukuran kecil
+                speedY: (Math.random() * 1.5 + 0.5) * -1, // Bergerak ke atas (spirit/pace)
+                speedX: (Math.random() - 0.5) * 0.5, // Sedikit bergoyang ke samping
+                opacity: Math.random() * 0.5 + 0.1
+            };
+        }
+
+        function animateSparks() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = '#c1b49a'; // Warna brand-tan (emas/khaki)
+
+            sparks.forEach(spark => {
+                ctx.globalAlpha = spark.opacity;
+                ctx.beginPath();
+                ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Pergerakan
+                spark.x += spark.speedX;
+                spark.y += spark.speedY;
+
+                // Reset posisi jika keluar layar dari atas
+                if (spark.y < 0) {
+                    spark.y = height;
+                    spark.x = Math.random() * width;
+                }
+            });
+            
+            requestAnimationFrame(animateSparks);
+        }
+
+        // Jalankan animasi saat halaman dimuat
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        animateSparks();
+    </script>
 </body>
 
 </html>
