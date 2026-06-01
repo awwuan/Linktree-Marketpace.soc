@@ -55,7 +55,7 @@
             /* Efek background radial subtle untuk meniru pencahayaan di gambar */
             background-image: radial-gradient(circle at 50% 10%, rgba(30, 41, 51, 0.5) 0%, rgba(12, 16, 20, 1) 60%);
             
-            /* Perubahan Utama: Memastikan tinggi mentok layar dan tanpa scroll */
+            /* Memastikan tinggi mentok layar dan tanpa scroll */
             height: 100dvh; 
             overflow: hidden;
         }
@@ -118,18 +118,19 @@
         </div>
     </div>
 
-    <!-- Container Utama: Menambahkan pb-6 agar pusat konten sedikit terangkat ke atas -->
-    <main class="w-full max-w-md px-6 flex flex-col items-center justify-center flex-1 min-h-0 relative z-10 pb-6 sm:pb-8">
+    <!-- Container Utama: Ditambahkan pb-[10vh] agar titik tengahnya sedikit naik ke atas -->
+    <main class="w-full max-w-md px-6 flex flex-col items-center justify-center flex-1 min-h-0 relative z-10 pb-[10vh] sm:pb-[12vh]">
 
-        <!-- Logo Section (Margin diperbesar ke bawah) -->
-        <div class="flex flex-col items-center mb-6 sm:mb-8 mt-2">
+        <!-- Logo Section -->
+        <div class="flex flex-col items-center mb-4 sm:mb-6">
             <!-- Mockup Logo MP -->
             <img src="/assets/Logo.jpg"
-                class="w-20 h-20 sm:w-24 sm:h-24 bg-black rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-gray-800">
+                onerror="this.src='https://placehold.co/200x200/1a2024/c1b49a?text=MP'"
+                class="w-28 h-28 sm:w-32 sm:h-32 bg-black rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-gray-800 object-cover">
         </div>
 
         <!-- Headline Texts -->
-        <div class="text-center mb-5 sm:mb-6">
+        <div class="text-center mb-4 sm:mb-5">
             <h2 class="font-inter font-semibold text-sm sm:text-sm text-white mb-1.5 letter-spacing-widest">
                 JERSEY RUNNING BARU & PRELOVED
             </h2>
@@ -141,7 +142,7 @@
 
         <!-- Features Icons Row -->
         <div
-            class="flex justify-center items-center w-full gap-3 sm:gap-6 mb-6 sm:mb-8 border-t border-b border-gray-800/50 py-3">
+            class="flex justify-center items-center w-full gap-3 sm:gap-6 mb-5 sm:mb-6 border-t border-b border-gray-800/50 py-2.5 sm:py-3">
             <!-- Feature 1 -->
             <div class="flex items-center gap-1.5 sm:gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-6 sm:h-6 text-brand-tan opacity-80" viewBox="0 0 24 24"
@@ -176,8 +177,8 @@
             </div>
         </div>
 
-        <!-- Links Container (Gap diperbesar dari gap-3 menjadi gap-4/gap-5) -->
-        <div class="w-full flex flex-col gap-4 sm:gap-5 w-full">
+        <!-- Links Container (Gap sedikit dirapatkan agar muat di device kecil) -->
+        <div class="w-full flex flex-col gap-3.5 sm:gap-4">
 
             <!-- WhatsApp Button -->
             <a href="wa.me/6289657042555"
