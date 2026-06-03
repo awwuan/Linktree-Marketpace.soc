@@ -1,348 +1,260 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Marketpace.soc - Running Essentials</title>
+    <title>Marketpace.soc - Premium Running Essentials</title>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:ital,wght@0,400;0,600;0,700;1,800;1,900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;700;800&display=swap" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Icon -->
-    <link rel="shortcut icon" href="/assets/Logo.jpg" type="image/x-icon">
-
-    <!-- Tailwind Config to match design colors -->
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         brand: {
-                            bg: '#0c1014', // Sangat gelap, hampir hitam
-                            tan: '#c1b49a', // Warna teks utama
-                            gray: '#8e9397', // Warna teks kecil
-                            darkbtn: '#1a2024', // Background tombol dark
-                            darkbtnhover: '#242b30',
-                            wa1: '#219643', // Gradien WA kiri
-                            wa2: '#1b7d36', // Gradien WA kanan
+                            bg: '#09090b', // Hitam pekat premium
+                            card: 'rgba(255, 255, 255, 0.03)',
+                            cardHover: 'rgba(255, 255, 255, 0.08)',
+                            border: 'rgba(255, 255, 255, 0.1)',
+                            tan: '#c1b49a',
+                            wa: '#25D366',
                             shopee: '#ee4d2d',
-                            tokopedia: '#42B549'
+                            tokopedia: '#00AA5B'
                         }
                     },
                     fontFamily: {
                         montserrat: ['Montserrat', 'sans-serif'],
                         inter: ['Inter', 'sans-serif'],
                     },
-                    backgroundImage: {
-                        'radial-glow': 'radial-gradient(circle at top, #1f2a33 0%, #0c1014 50%)',
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        'move-grid': 'moveGrid 2.5s linear infinite', // Animasi grid lari
+                        'streak-1': 'streak 4s linear infinite', // Garis kecepatan 1
+                        'streak-2': 'streak 6s linear infinite 2s', // Garis kecepatan 2
+                        'streak-3': 'streak 5s linear infinite 4s', // Garis kecepatan 3
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        // Animasi grid bergerak memberi kesan lari ke depan
+                        moveGrid: {
+                            '0%': { backgroundPosition: '0px 0px' },
+                            '100%': { backgroundPosition: '0px 40px' },
+                        },
+                        // Garis melesat diagonal mensimulasikan Pace/Speed
+                        streak: {
+                            '0%': { transform: 'translate(-50vw, -100vh) rotate(45deg)' },
+                            '100%': { transform: 'translate(150vw, 150vh) rotate(45deg)' },
+                        }
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Custom styles */
         body {
-            background-color: #0c1014;
-            color: white;
-            /* Efek background radial subtle */
-            background-image: radial-gradient(circle at 50% 10%, rgba(30, 41, 51, 0.5) 0%, rgba(12, 16, 20, 1) 60%);
-            /* Memastikan tinggi mentok layar dan tanpa scroll */
-            height: 100dvh; 
-            overflow: hidden;
-        }
-
-        .letter-spacing-widest {
-            letter-spacing: 0.15em;
-        }
-
-        .letter-spacing-wide {
-            letter-spacing: 0.05em;
-        }
-
-        /* ANIMASI MODERN BARU */
-        @keyframes breathe {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-        .animate-breathe {
-            animation: breathe 15s ease-in-out infinite;
+            background-color: #09090b;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
         }
         
-        #mouse-glow {
-            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(193, 180, 154, 0.08), transparent 40%);
-            transition: opacity 0.5s ease;
-        }
+        /* Utilitas untuk delay animasi */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+
+        /* Menyembunyikan scrollbar tapi tetap bisa scroll */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
     </style>
 </head>
 
-<body class="font-inter antialiased flex flex-col items-center justify-between">
+<body class="font-inter min-h-[100dvh] flex flex-col items-center relative overflow-x-hidden selection:bg-brand-tan selection:text-black">
 
-    <!-- Modern Premium Background -->
-    <div class="fixed inset-0 z-[-1] pointer-events-none bg-brand-bg overflow-hidden">
+    <!-- Premium Running-Themed Ambient Background -->
+    <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-brand-bg">
         
-        <!-- Interactive Mouse Glow (Terlihat saat digerakkan di Desktop) -->
-        <div id="mouse-glow" class="absolute inset-0 opacity-0 sm:opacity-100 mix-blend-screen"></div>
-
-        <!-- Canvas untuk Efek "Speed Sparks" (Pace/Kecepatan) -->
-        <canvas id="speed-sparks" class="absolute inset-0 opacity-50"></canvas>
-
-        <!-- Animated Ambient Glows (Warna emas/tan dari brand) -->
-        <div
-            class="absolute -top-[20%] -right-[10%] w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] rounded-full bg-brand-tan opacity-[0.08] blur-[80px] sm:blur-[120px] animate-[pulse_6s_ease-in-out_infinite]">
-        </div>
-        <div
-            class="absolute -bottom-[10%] -left-[10%] w-[50vw] h-[50vw] max-w-[500px] max-h-[500px] rounded-full bg-white opacity-[0.03] blur-[80px] sm:blur-[100px] animate-[pulse_8s_ease-in-out_infinite_reverse]">
-        </div>
-
-        <!-- Modern Technical Grid (Kesan sporty & terstruktur) -->
-        <div
-            class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_0%,#000_40%,transparent_100%)] -webkit-mask-image:-webkit-radial-gradient(ellipse_80%_80%_at_50%_0%,#000_40%,transparent_100%)">
-        </div>
-
-        <!-- Texture Aksi Berlari (Tema Running) dengan animasi Breathe -->
-        <div class="absolute inset-0 opacity-40 animate-breathe origin-center" style="background-image: url('https://images.unsplash.com/photo-1552674605-171ff535c5c8?q=80&w=2070&auto=format&fit=crop'); 
-                    background-size: cover; 
-                    background-position: center top; 
-                    filter: grayscale(100%) contrast(120%);
-                    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%); 
-                    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, transparent 100%);">
-        </div>
+        <!-- 1. Grid pattern maju (Speed/Forward Motion) -->
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] animate-move-grid [mask-image:linear-gradient(to_bottom,black_30%,transparent_90%)]"></div>
+        
+        <!-- 2. Speed Streaks (Garis Kecepatan) -->
+        <div class="absolute w-[150vmax] h-[1px] bg-gradient-to-r from-transparent via-brand-tan/40 to-transparent animate-streak-1 origin-left"></div>
+        <div class="absolute w-[150vmax] h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent animate-streak-2 origin-left"></div>
+        <div class="absolute w-[150vmax] h-[1px] bg-gradient-to-r from-transparent via-brand-tan/20 to-transparent animate-streak-3 origin-left"></div>
+        
+        <!-- 3. Falling Dots Canvas (Titik jatuh) -->
+        <canvas id="falling-dots" class="absolute inset-0 opacity-60"></canvas>
     </div>
 
-    <!-- Container Utama: Responsif max-w-sm (HP) dan max-w-md (Laptop/Desktop) -->
-    <main class="w-full max-w-sm sm:max-w-md px-6 flex flex-col items-center justify-center flex-1 min-h-0 relative z-10 pb-6 sm:pb-0">
+    <!-- Main Container -->
+    <main class="w-full max-w-[420px] px-6 py-12 flex flex-col items-center flex-1 z-10">
 
-        <!-- Logo Section -->
-        <div class="flex flex-col items-center mb-6 sm:mb-6">
-            <!-- Mockup Logo MP -->
-            <img src="/assets/Logo.jpg"
-                onerror="this.src='https://placehold.co/200x200/1a2024/c1b49a?text=MP'"
-                class="w-32 h-32 sm:w-32 sm:h-32 bg-black rounded-full flex flex-col items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.08)] sm:shadow-[0_0_20px_rgba(255,255,255,0.05)] border border-gray-800 object-cover">
-        </div>
+        <!-- 1. Profile Section -->
+        <div class="flex flex-col items-center w-full animate-fade-in-up opacity-0">
+            <!-- Logo dengan Ring -->
+            <div class="relative group cursor-pointer mb-5">
+                <div class="absolute inset-0 bg-gradient-to-tr from-brand-tan to-white/30 rounded-full blur-md opacity-30 group-hover:opacity-60 transition duration-500"></div>
+                <img src="/assets/Logo.jpg" 
+                     onerror="this.src='https://placehold.co/200x200/1a2024/c1b49a?text=MP'" 
+                     alt="Marketpace Logo" 
+                     class="relative w-28 h-28 object-cover rounded-full border-2 border-white/10 shadow-2xl">
+            </div>
 
-        <!-- Headline Texts -->
-        <div class="text-center mb-6 sm:mb-5">
-            <h2 class="font-inter font-semibold text-sm sm:text-sm text-white mb-2 sm:mb-1.5 letter-spacing-widest">
-                JERSEY RUNNING BARU & PRELOVED
-            </h2>
-            <p
-                class="font-inter text-xs sm:text-[10px] md:text-xs text-brand-gray letter-spacing-wide flex items-center justify-center gap-2">
-                KUALITAS TERPILIH <span class="text-[8px]">•</span> HARGA BERSAHABAT
+            <!-- Title & Subtitle -->
+            <h1 class="font-montserrat font-bold text-2xl tracking-wide text-white mb-1 uppercase text-center">
+                Marketpace<span class="text-brand-tan">.soc</span>
+            </h1>
+            <p class="text-gray-400 text-sm font-medium tracking-wide mb-6 text-center max-w-[280px]">
+                Premium New & Preloved <br>Running Jerseys
             </p>
         </div>
 
-        <!-- Features Icons Row -->
-        <div
-            class="flex justify-center items-center w-full gap-4 sm:gap-6 mb-8 sm:mb-6 border-t border-b border-gray-800/50 py-3 sm:py-3">
-            <!-- Feature 1 -->
-            <div class="flex items-center gap-2 sm:gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-6 sm:h-6 text-brand-tan opacity-100 sm:opacity-80" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    <path d="m9 12 2 2 4-4"></path>
-                </svg>
-                <span class="text-[10px] sm:text-[10px] text-gray-300 font-medium leading-tight">100%<br>ORIGINAL</span>
+        <!-- 2. Feature Badges -->
+        <div class="flex items-center justify-center gap-3 w-full mb-8 animate-fade-in-up opacity-0 delay-100">
+            <div class="flex items-center gap-1.5 bg-brand-card border border-brand-border px-3 py-1.5 rounded-full backdrop-blur-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-tan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                <span class="text-[11px] font-medium text-gray-300">100% Original</span>
             </div>
-            <div class="w-[1px] h-6 sm:h-5 bg-gray-800"></div> <!-- Divider -->
-            <!-- Feature 2 -->
-            <div class="flex items-center gap-2 sm:gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-6 sm:h-6 text-brand-tan opacity-100 sm:opacity-80" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="8" r="7"></circle>
-                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                </svg>
-                <span class="text-[10px] sm:text-[10px] text-gray-300 font-medium leading-tight">KONDISI<br>TERPILIH</span>
-            </div>
-            <div class="w-[1px] h-6 sm:h-5 bg-gray-800"></div> <!-- Divider -->
-            <!-- Feature 3 -->
-            <div class="flex items-center gap-2 sm:gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 sm:w-6 sm:h-6 text-brand-tan opacity-100 sm:opacity-80" viewBox="0 0 24 24"
-                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path
-                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
-                    </path>
-                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                <span class="text-[10px] sm:text-[10px] text-gray-300 font-medium leading-tight">CEPAT<br>& AMAN</span>
+            <div class="flex items-center gap-1.5 bg-brand-card border border-brand-border px-3 py-1.5 rounded-full backdrop-blur-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-brand-tan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                <span class="text-[11px] font-medium text-gray-300">Kondisi Terpilih</span>
             </div>
         </div>
 
-        <!-- Links Container -->
-        <div class="w-full flex flex-col gap-5 sm:gap-4">
-
-            <!-- WhatsApp Button -->
-            <a href="https://wa.me/6289657042555"
-                class="group w-full bg-gradient-to-r from-brand-wa1 to-brand-wa2 p-4 sm:p-4 rounded-3xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 shadow-[0_10px_20px_rgba(33,150,67,0.15)]">
-                <div class="flex items-center gap-4 sm:gap-4">
-                    <!-- WA Icon Box -->
-                    <div
-                        class="w-14 h-14 sm:w-12 sm:h-12 bg-white/20 rounded-2xl sm:rounded-2xl flex items-center justify-center backdrop-blur-sm shadow-inner">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24"
-                            fill="currentColor">
-                            <path
-                                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+        <!-- 3. Links Section -->
+        <div class="w-full flex flex-col gap-4">
+            
+            <!-- WhatsApp (Primary CTA) -->
+            <a href="https://wa.me/6289657042555" class="group relative w-full flex items-center justify-between p-1 rounded-2xl bg-gradient-to-r from-[#219643] to-[#1b7d36] hover:shadow-[0_0_20px_rgba(37,211,102,0.3)] transition-all duration-300 transform hover:-translate-y-1 animate-fade-in-up opacity-0 delay-200">
+                <div class="flex items-center gap-4 w-full bg-black/10 rounded-xl p-3">
+                    <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
                         </svg>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base sm:text-base">Chat via WhatsApp</h3>
-                        <p class="text-green-100 text-xs sm:text-[10px] md:text-xs mt-0.5">Fast Response</p>
+                    <div class="flex-1 text-left">
+                        <h3 class="font-semibold text-white text-base">Chat via WhatsApp</h3>
+                        <p class="text-white/80 text-xs mt-0.5">Admin Fast Response ⚡</p>
                     </div>
-                </div>
-                <!-- Animasi panah hanya tampil di layar desktop (sm) -->
-                <div class="hidden sm:block text-white opacity-80 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
+                    <div class="text-white opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+                    </div>
                 </div>
             </a>
 
-            <!-- Shopee Button -->
-            <a href="https://shp.ee/fTyzj8Xe"
-                class="group w-full bg-brand-darkbtn hover:bg-brand-darkbtnhover p-4 sm:p-4 rounded-3xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 border border-gray-800 shadow-lg">
-                <div class="flex items-center gap-4 sm:gap-4">
-                    <!-- Shopee Icon Box -->
-                    <div class="w-14 h-14 sm:w-12 sm:h-12 bg-[#1f2529] rounded-2xl sm:rounded-2xl flex items-center justify-center shadow-inner text-brand-shopee">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Shopee (Secondary) -->
+            <a href="https://shp.ee/fTyzj8Xe" class="group flex items-center justify-between p-4 rounded-2xl bg-brand-card hover:bg-brand-cardHover border border-brand-border hover:border-brand-shopee/50 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in-up opacity-0 delay-300 backdrop-blur-sm">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-brand-shopee/10 rounded-xl flex items-center justify-center text-brand-shopee group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <path d="M16 10a4 4 0 0 1-8 0"></path>
                         </svg>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base sm:text-base">Shopee Store</h3>
-                        <p class="text-brand-shopee text-xs sm:text-[10px] md:text-xs mt-0.5 font-medium">Order by Shopee 🛍️</p>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-gray-200 group-hover:text-white transition-colors text-base">Shopee Store</h3>
+                        <p class="text-gray-500 text-xs mt-0.5">Order via Shopee</p>
                     </div>
                 </div>
-                <!-- Animasi panah hanya tampil di layar desktop (sm) -->
-                <div class="hidden sm:block text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
+                <div class="text-gray-600 group-hover:text-brand-shopee group-hover:translate-x-1 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                 </div>
             </a>
 
-            <!-- Tokopedia Button -->
-            <a href="https://tk.tokopedia.com/ZSxnGJBP1/"
-                class="group w-full bg-brand-darkbtn hover:bg-brand-darkbtnhover p-4 sm:p-4 rounded-3xl flex items-center justify-between hover:scale-[1.02] transition-transform duration-300 border border-gray-800 shadow-lg">
-                <div class="flex items-center gap-4 sm:gap-4">
-                    <!-- Tokopedia Icon Box -->
-                    <div class="w-14 h-14 sm:w-12 sm:h-12 bg-[#1f2529] rounded-2xl sm:rounded-2xl flex items-center justify-center shadow-inner text-[#42B549]">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Tokopedia (Secondary) -->
+            <a href="https://tk.tokopedia.com/ZSxnGJBP1/" class="group flex items-center justify-between p-4 rounded-2xl bg-brand-card hover:bg-brand-cardHover border border-brand-border hover:border-brand-tokopedia/50 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in-up opacity-0 delay-400 backdrop-blur-sm">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-brand-tokopedia/10 rounded-xl flex items-center justify-center text-brand-tokopedia group-hover:scale-110 transition-transform">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
                             <line x1="3" y1="6" x2="21" y2="6"></line>
                             <path d="M16 10a4 4 0 0 1-8 0"></path>
                         </svg>
                     </div>
-                    <div>
-                        <h3 class="font-bold text-white text-base sm:text-base">Tokopedia Store</h3>
-                        <p class="text-brand-tokopedia text-xs sm:text-[10px] md:text-xs mt-0.5 font-medium">Order by Tokopedia ⚡</p>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-gray-200 group-hover:text-white transition-colors text-base">Tokopedia Store</h3>
+                        <p class="text-gray-500 text-xs mt-0.5">Order via Tokopedia</p>
                     </div>
                 </div>
-                <!-- Animasi panah hanya tampil di layar desktop (sm) -->
-                <div class="hidden sm:block text-gray-400 group-hover:text-white group-hover:translate-x-1 transition-all">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                        stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
+                <div class="text-gray-600 group-hover:text-brand-tokopedia group-hover:translate-x-1 transition-all">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
                 </div>
             </a>
 
         </div>
     </main>
 
-    <!-- Footer Section -->
-    <footer class="w-full sm:max-w-md flex flex-col items-center border-t border-gray-800/50 py-6 sm:py-4 mt-auto relative z-10">
-        <!-- Instagram Link -->
-        <a href="https://instagram.com/marketpace.soc" target="_blank"
-            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 sm:w-4 sm:h-4" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Footer -->
+    <footer class="w-full pb-8 pt-4 flex justify-center z-10 animate-fade-in-up opacity-0 delay-500">
+        <a href="https://instagram.com/marketpace.soc" target="_blank" class="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:scale-110 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
                 <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
                 <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
-            <span class="font-inter text-sm sm:text-sm tracking-wide">@marketpace.soc</span>
+            <span class="font-inter text-xs tracking-wider">@marketpace.soc</span>
         </a>
     </footer>
 
-    <!-- Javascript untuk Animasi Interaktif -->
+    <!-- Javascript untuk Animasi Titik Jatuh -->
     <script>
-        // 1. Interactive Mouse Glow (Sorot kursor mengikuti mouse - Hanya aktif di Desktop)
-        const glow = document.getElementById('mouse-glow');
-        window.addEventListener('mousemove', (e) => {
-            const x = e.clientX;
-            const y = e.clientY;
-            glow.style.setProperty('--mouse-x', `${x}px`);
-            glow.style.setProperty('--mouse-y', `${y}px`);
-        });
-
-        // 2. Speed Sparks Canvas (Efek partikel energi lari)
-        const canvas = document.getElementById('speed-sparks');
+        const canvas = document.getElementById('falling-dots');
         const ctx = canvas.getContext('2d');
-        let width, height, sparks = [];
+        let width, height, dots = [];
 
         function initCanvas() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            sparks = [];
-            // Buat 40 partikel energi
+            dots = [];
             for (let i = 0; i < 40; i++) {
-                sparks.push(createSpark());
+                dots.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 1.5 + 0.5,
+                    speedY: (Math.random() * 1.5 + 0.5), // Kecepatan positif agar jatuh ke bawah
+                    speedX: (Math.random() - 0.5) * 0.5, // Sedikit goyangan ke samping
+                    opacity: Math.random() * 0.5 + 0.1
+                });
             }
         }
 
-        function createSpark() {
-            return {
-                x: Math.random() * width,
-                y: Math.random() * height,
-                size: Math.random() * 1.5 + 0.5, // Ukuran kecil
-                speedY: (Math.random() * 1.5 + 0.5) * -1, // Bergerak ke atas (spirit/pace)
-                speedX: (Math.random() - 0.5) * 0.5, // Sedikit bergoyang ke samping
-                opacity: Math.random() * 0.5 + 0.1
-            };
-        }
-
-        function animateSparks() {
+        function animateDots() {
             ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = '#c1b49a'; // Warna brand-tan (emas/khaki)
+            ctx.fillStyle = '#c1b49a'; // Warna titik dari brand
 
-            sparks.forEach(spark => {
-                ctx.globalAlpha = spark.opacity;
+            dots.forEach(dot => {
+                ctx.globalAlpha = dot.opacity;
                 ctx.beginPath();
-                ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
+                ctx.arc(dot.x, dot.y, dot.size, 0, Math.PI * 2);
                 ctx.fill();
 
-                // Pergerakan
-                spark.x += spark.speedX;
-                spark.y += spark.speedY;
+                dot.x += dot.speedX;
+                dot.y += dot.speedY;
 
-                // Reset posisi jika keluar layar dari atas
-                if (spark.y < 0) {
-                    spark.y = height;
-                    spark.x = Math.random() * width;
+                // Reset ke atas layar jika sudah melewati batas bawah
+                if (dot.y > height) {
+                    dot.y = -10;
+                    dot.x = Math.random() * width;
                 }
             });
-            
-            requestAnimationFrame(animateSparks);
+            requestAnimationFrame(animateDots);
         }
 
-        // Jalankan animasi saat halaman dimuat
         window.addEventListener('resize', initCanvas);
         initCanvas();
-        animateSparks();
+        animateDots();
     </script>
 </body>
-
 </html>
